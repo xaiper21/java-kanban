@@ -8,22 +8,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Epic extends Task {
-    HashMap<Integer, Subtask> subtasks;
+    private HashMap<Integer, Subtask> subtasks;
 
-    public Epic() {
+    public Epic(TaskStatus status, String name, String description) {
+        super(status, name, description);
         subtasks = new HashMap<>();
-    }
-
-    public HashMap<Integer, Subtask> getSubtasks() {
-        return subtasks;
-    }
-
-    public void setSubtasks(HashMap<Integer, Subtask> subtasks) {
-        this.subtasks = subtasks;
     }
 
     public void addSubtask(Subtask subtask) {
         subtasks.put(subtask.getId(), subtask);
+        calculateStatus();
     }
 
     private TaskStatus calculateStatus() {
@@ -37,7 +31,6 @@ public class Epic extends Task {
             TaskStatus statusSubtask = subtask.getStatus();
             switch (statusSubtask) {
                 case TaskStatus.DONE -> isDone = true;
-                // case NEW -> isNew = true;
                 case TaskStatus.IN_PROGRESS -> isProgress = true;
                 case null, default -> isNew = true;
             }
@@ -49,32 +42,27 @@ public class Epic extends Task {
         } else return TaskStatus.IN_PROGRESS;
     }
 
-    public void updateStatus() {
-        setStatus(calculateStatus());
-    }
-
-    public void removeAllSubtasks(){
+    public void removeAllSubtasks() {
         subtasks.clear();
+        calculateStatus();
     }
 
-    public Subtask getSubtaskById(int id){
-        if (subtasks.containsKey(id)){
-            return subtasks.get(id);
-        }else return null;
+    public Subtask getSubtaskById(int id) {
+        return subtasks.get(id);
     }
 
-    public boolean isContainsSubtaskId(int id){
+    public boolean isContainsSubtaskId(int id) {
         return subtasks.containsKey(id);
     }
 
-    public void removeSubtaskById(int id){
+    public void removeSubtaskById(int id) {
         subtasks.remove(id);
+        calculateStatus();
     }
 
-    public ArrayList<Subtask> getArrayListSubtasks(){
+    public ArrayList<Subtask> getArrayListSubtasks() {
         ArrayList<Subtask> subtasks = new ArrayList<>();
         subtasks.addAll(this.subtasks.values());
         return subtasks;
     }
-
 }

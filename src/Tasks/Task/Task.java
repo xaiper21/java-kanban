@@ -5,13 +5,19 @@ import Tasks.TaskStatus;
 import java.util.Objects;
 
 public class Task {
-    private String name;
-    private String description;
-    private int id;
-    private TaskStatus status;
+    protected String name;
+    protected String description;
+    protected int id;
+    protected TaskStatus status;
 
     public String getName() {
         return name;
+    }
+
+    public Task(TaskStatus status, String name, String description) {
+        this.status = status;
+        this.name = name;
+        this.description = description;
     }
 
     public void setName(String name) {
