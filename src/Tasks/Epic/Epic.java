@@ -10,8 +10,8 @@ import java.util.HashMap;
 public class Epic extends Task {
     private HashMap<Integer, Subtask> subtasks;
 
-    public Epic(TaskStatus status, String name, String description) {
-        super(status, name, description);
+    public Epic(String name, String description) {
+        super(TaskStatus.NEW, name, description);
         subtasks = new HashMap<>();
     }
 
@@ -20,9 +20,9 @@ public class Epic extends Task {
         calculateStatus();
     }
 
-    private TaskStatus calculateStatus() {
+    private void calculateStatus() {
         if (subtasks.isEmpty()) {
-            return TaskStatus.NEW;
+            this.status = TaskStatus.NEW;
         }
         boolean isProgress = false;
         boolean isNew = false;
@@ -36,10 +36,10 @@ public class Epic extends Task {
             }
         }
         if (!isProgress && !isDone) {
-            return TaskStatus.NEW;
+            this.status = TaskStatus.NEW;
         } else if (!isProgress && !isNew) {
-            return TaskStatus.DONE;
-        } else return TaskStatus.IN_PROGRESS;
+            this.status = TaskStatus.DONE;
+        } else this.status = TaskStatus.IN_PROGRESS;
     }
 
     public void removeAllSubtasks() {

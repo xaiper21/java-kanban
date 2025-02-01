@@ -11,7 +11,7 @@ public class TaskManager {
     private int identifier = 0;
 
     private int getIdentifier() {
-        return identifier++;
+        return ++identifier;
     }
 
     private HashMap<Integer, Task> taskTable;
@@ -115,6 +115,7 @@ public class TaskManager {
 
     public void updateSubtask(Subtask subtask) {
         if (subtask == null) return;
+        if (!epicTable.containsKey(subtask.getIdMyEpic())) return;
         if (epicTable.get(subtask.getIdMyEpic()).isContainsSubtaskId(subtask.getId())) {
             epicTable.get(subtask.getIdMyEpic()).addSubtask(subtask);
         }
