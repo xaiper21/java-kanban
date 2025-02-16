@@ -1,0 +1,37 @@
+package Tasks.Subtask;
+
+import Tasks.TaskStatus;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class SubtaskTest {
+
+    @Test
+    public void testEqualsSubtasks1(){
+    Subtask subtask1 = new Subtask(TaskStatus.NEW, "1", "2", 3);
+    Subtask subtask2 = new Subtask(TaskStatus.NEW, "2", "3", 3);
+    subtask1.setId(2);
+    subtask2.setId(2);
+    assertTrue(subtask1.equals(subtask2));
+    }
+
+    @Test
+    public void testEqualsSubtasks2(){
+        Subtask subtask1 = new Subtask(TaskStatus.NEW, "1", "2", 3);
+        Subtask subtask2 = new Subtask(TaskStatus.NEW, "2", "3", 5);
+        subtask1.setId(2);
+        subtask2.setId(2);
+        assertTrue(subtask1.equals(subtask2));
+    }
+
+    @Test
+    public void testNoEqualsSubtasks(){
+        Subtask subtask1 = new Subtask(TaskStatus.NEW, "1", "2", 3);
+        Subtask subtask2 = new Subtask(TaskStatus.NEW, "1", "3", 3);
+        subtask1.setId(2);
+        subtask2.setId(3);
+        assertFalse(subtask1.equals(subtask2));
+    }
+
+}
