@@ -7,20 +7,20 @@ import java.util.List;
 
 public class HistoryList<T extends Task> {
     private final int MAX_COUNT_ELEMENTS_IN_LIST = 10;
-    List<T> historyList;
+    private List<T> historyList;
 
     public HistoryList() {
         historyList = new ArrayList<>();
     }
 
-    public void add(T item){
-        if (historyList.size() == MAX_COUNT_ELEMENTS_IN_LIST){
+    public void add(T item) {
+        if (historyList.size() == MAX_COUNT_ELEMENTS_IN_LIST) {
             historyList.remove(0);
         }
         historyList.add(item);
     }
 
-    public List<T> getList(){
-        return historyList;
+    public List<T> getList() {
+        return new ArrayList<>(historyList);
     }
 }

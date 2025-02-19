@@ -1,6 +1,5 @@
 package Managers;
 
-import HistoryList.HistoryList;
 import Tasks.Epic.Epic;
 import Tasks.Subtask.Subtask;
 import Tasks.Task.Task;
@@ -8,6 +7,7 @@ import Tasks.Task.Task;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
     private int identifier = 0;
@@ -16,8 +16,8 @@ public class InMemoryTaskManager implements TaskManager {
         return ++identifier;
     }
 
-    private HashMap<Integer, Task> taskTable;
-    private HashMap<Integer, Epic> epicTable;
+    private Map<Integer, Task> taskTable;
+    private Map<Integer, Epic> epicTable;
     HistoryManager historyManager;
 
     public InMemoryTaskManager() {
@@ -26,11 +26,9 @@ public class InMemoryTaskManager implements TaskManager {
         historyManager = new InMemoryHistoryManager();
     }
 
-
-
     @Override
-    public ArrayList<Task> getListAllTalks() {
-        ArrayList<Task> tasks = new ArrayList<>();
+    public List<Task> getListAllTalks() {
+        List<Task> tasks = new ArrayList<>();
         for (Task task : taskTable.values()) {
             tasks.add(task);
         }
@@ -38,8 +36,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList<Epic> getListAllEpics() {
-        ArrayList<Epic> epics = new ArrayList<>();
+    public List<Epic> getListAllEpics() {
+        List<Epic> epics = new ArrayList<>();
         for (Epic epic : epicTable.values()) {
             epics.add(epic);
         }
@@ -47,8 +45,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList<Subtask> getListAllSubtasks() {
-        ArrayList<Subtask> subtasks = new ArrayList<>();
+    public List<Subtask> getListAllSubtasks() {
+        List<Subtask> subtasks = new ArrayList<>();
         for (Epic epic : epicTable.values()) {
             for (Subtask subtask : epic.getArrayListSubtasks()) {
                 subtasks.add(subtask);
@@ -174,5 +172,10 @@ public class InMemoryTaskManager implements TaskManager {
         if (epicTable.containsKey(id)) {
             return epicTable.get(id).getArrayListSubtasks();
         } else return defaultList;
+    }
+
+    @Override
+    public List<Task> getHistory() {
+        return historyManager.getHistory();
     }
 }
