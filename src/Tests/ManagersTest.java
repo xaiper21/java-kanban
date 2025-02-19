@@ -16,34 +16,27 @@ class ManagersTest {
     Managers managers = new Managers();
     TaskManager inMemoryTaskManager = managers.getDefault();
 
-    @AfterEach
-    public void replaceManager() {
-        managers = new Managers();
-        inMemoryTaskManager = managers.getDefault();
-    }
-
     @Test
     public void checkTaskManagerAddAndGetTaskTrue() {
         Task task1 = new Task(TaskStatus.NEW, "1", "2");
         inMemoryTaskManager.addTask(task1);
-        assertTrue(task1.equals(inMemoryTaskManager.getTaskById(1)));
+        assertTrue(task1.equals(inMemoryTaskManager.getTaskById(task1.getId())));
     }
 
     @Test
     public void checkTaskManagerAddAndGetEpicTrue() {
         Epic epic = new Epic("1", "2");
         inMemoryTaskManager.addEpic(epic);
-        assertEquals(epic, inMemoryTaskManager.getEpicById(1));
+        assertEquals(epic, inMemoryTaskManager.getEpicById(epic.getId()));
     }
 
     @Test
     public void addSubtaskTest() {
         Epic epic = new Epic("1", "2");
         inMemoryTaskManager.addEpic(epic);
-        Subtask subtask = new Subtask(TaskStatus.NEW, "2", "10", 1);
+        Subtask subtask = new Subtask(TaskStatus.NEW, "2", "10", epic.getId());
         inMemoryTaskManager.addSubtask(subtask);
-        subtask.setId(2);
-        assertTrue(subtask.equals(inMemoryTaskManager.getSubtaskById(2)));
+        assertTrue(subtask.equals(inMemoryTaskManager.getSubtaskById(subtask.getId())));
     }
 
     @Test
