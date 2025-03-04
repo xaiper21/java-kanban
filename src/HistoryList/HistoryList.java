@@ -2,25 +2,28 @@ package HistoryList;
 
 import Tasks.Task.Task;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class HistoryList<T extends Task> {
-    private final int MAX_COUNT_ELEMENTS_IN_LIST = 10;
-    private List<T> historyList;
+    private Map<Integer,T> historyMap;
 
     public HistoryList() {
-        historyList = new ArrayList<>();
+        historyMap = new LinkedHashMap<>();
     }
 
     public void add(T item) {
-        if (historyList.size() == MAX_COUNT_ELEMENTS_IN_LIST) {
-            historyList.remove(0);
+        if (historyMap.containsValue(item)){
+            historyMap.remove(item.getId());
         }
-        historyList.add(item);
+            historyMap.put(item.getId(), item);
     }
 
     public List<T> getList() {
-        return new ArrayList<>(historyList);
+        return new ArrayList<>(historyMap.values());
     }
+
+    public void removeById(int id){
+        historyMap.remove(id);
+    }
+
 }
