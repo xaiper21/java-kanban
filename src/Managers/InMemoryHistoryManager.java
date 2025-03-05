@@ -1,16 +1,16 @@
 package Managers;
 
-import HistoryList.HistoryList;
+import HistorySet.HistorySet;
 import Tasks.Task.Task;
 
 import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    private HistoryList<Task> list;
+    private HistorySet<Task> list;
 
-    public InMemoryHistoryManager(){
-        list = new HistoryList<>();
+    public InMemoryHistoryManager() {
+        list = new HistorySet<Task>();
     }
 
     @Override
@@ -24,7 +24,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     @Override
-    public void remove(int id){
-    list.removeById(id);
+    public void remove(int id) {
+        list.remove(id);
     }
 }

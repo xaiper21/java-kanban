@@ -80,6 +80,17 @@ public class Main {
         System.out.println(historyManager.getHistory());
 
 
+        //TESTS
+//        Task task1 = new Task(TaskStatus.NEW, "таска 1", "что-то сделать в первой задаче");
+//        Task task2 = new Task(TaskStatus.NEW, "таска 2", "что-то сделать во второй задаче");
+//
+//        taskManager.addTask(task1);
+//        taskManager.addTask(task2);
+//        taskManager.getTaskById(task1.getId());
+//        taskManager.getTaskById(task1.getId());
+//        taskManager.getTaskById(task1.getId());
+//
+//        System.out.println(historyManager.getHistory());
     }
 
 
