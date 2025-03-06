@@ -1,50 +1,60 @@
-//package HistorySet;
-//
-//import Tasks.Task.Task;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//public class LinkedHistoryList<T extends Task> {
-//    private Node<T> firstItem;
-//    private Node<T> lastItem;
-//
-//    public void linkLast(T item) {
-//        Node<T> node = new Node<>(item);
-//        if (firstItem == null) {
-//            firstItem = node;
-//        } else {
-//            node = lastItem.getNext();
-//        }
-//        lastItem = node;
-//    }
-//
-//    public List<T> getTasks() {
-//        List<T> list = new ArrayList<>();
-//        Node<T> node = firstItem;
-//        while (node != null) {
-//            list.add(node.getValue());
-//            node = node.getNext();
-//        }
-//        return list;
-//    }
-//
-//    public void removeNode(Node<T> node) {
-//        Node<T> prevNode = null;
-//        Node<T> nextNode = null;
-//        if (node.getPrev() != null) {
-//            prevNode.setNext(nextNode);
-//            prevNode = node.getPrev();
-//        } else {
-//            firstItem = firstItem.getNext();
-//        }
-//        if (node.getNext() != null) {
-//            nextNode = node.getNext();
-//            nextNode.setPrev(prevNode);
-//            lastItem = lastItem.getPrev();
-//        }
-//    }
-//
-//    public LinkedHistoryList() {
-//    }
-//}
+package HistorySet;
+
+import Tasks.Task.Task;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class LinkedHistoryList<T extends Task> {
+    public Node<T> firstItem;
+    public Node<T> lastItem;
+
+    public LinkedHistoryList() {
+        lastItem = null;
+        firstItem = null;
+    }
+
+    public void linkLast(Node<T> newNode) {
+        if (lastItem == null) {
+            firstItem = newNode;
+            lastItem = newNode;
+        } else if (lastItem == firstItem) {
+            lastItem = newNode;
+            firstItem.next = lastItem;
+            lastItem.prev = firstItem;
+        } else {
+            newNode.prev = lastItem;
+            lastItem.next = newNode;
+            lastItem = newNode;
+        }
+    }
+
+    public List<T> getTasks() {
+        List<T> list = new ArrayList<>();
+        Node<T> node = firstItem;
+        while (node != null) {
+            list.add(node.value);
+            node = node.next;
+        }
+        return list;
+    }
+
+    public void removeNode(Node<T> node) {
+        final Node<T> prevNode = node.prev;
+        final Node<T> nextNode = node.next;
+
+        if (prevNode == null) {
+            firstItem = nextNode;
+        } else {
+            prevNode.next = nextNode;
+            node.prev = null;
+        }
+        if (nextNode == null) {
+            lastItem = prevNode;
+        } else {
+            nextNode.prev = prevNode;
+            node.next = null;
+        }
+    }
+
+}
