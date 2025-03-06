@@ -17,16 +17,11 @@ public class LinkedHistoryList<T extends Task> {
     public void linkLast(Node<T> newNode) {
         if (lastItem == null) {
             firstItem = newNode;
-            lastItem = newNode;
-        } else if (lastItem == firstItem) {
-            lastItem = newNode;
-            firstItem.next = lastItem;
-            lastItem.prev = firstItem;
         } else {
             newNode.prev = lastItem;
             lastItem.next = newNode;
-            lastItem = newNode;
         }
+        lastItem = newNode;
     }
 
     public List<T> getTasks() {
@@ -47,13 +42,11 @@ public class LinkedHistoryList<T extends Task> {
             firstItem = nextNode;
         } else {
             prevNode.next = nextNode;
-            node.prev = null;
         }
         if (nextNode == null) {
             lastItem = prevNode;
         } else {
             nextNode.prev = prevNode;
-            node.next = null;
         }
     }
 }
