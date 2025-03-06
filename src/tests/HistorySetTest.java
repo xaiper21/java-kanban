@@ -1,7 +1,7 @@
 package tests;
 
 
-import historySet.HistorySet;
+import history.HistorySet;
 import managers.InMemoryTaskManager;
 import tasks.task.Task;
 import tasks.TaskStatus;

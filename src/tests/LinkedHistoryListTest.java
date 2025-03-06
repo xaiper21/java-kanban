@@ -1,7 +1,7 @@
 package tests;
 
-import historySet.LinkedHistoryList;
-import historySet.Node;
+import history.LinkedHistoryList;
+import history.Node;
 import tasks.task.Task;
 import tasks.TaskStatus;
 import org.junit.jupiter.api.BeforeEach;
