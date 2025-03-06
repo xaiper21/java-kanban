@@ -1,7 +1,7 @@
-package Tasks.Subtask;
+package tasks.subtask;
 
-import Tasks.Task.Task;
-import Tasks.TaskStatus;
+import tasks.task.Task;
+import tasks.TaskStatus;
 
 public class Subtask extends Task {
     private int idMyEpic;

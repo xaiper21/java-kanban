@@ -1,11 +1,12 @@
-package Tests;
+package test;
 
-import Tasks.Epic.Epic;
-import Tasks.Subtask.Subtask;
-import Tasks.TaskStatus;
+import tasks.epic.Epic;
+import tasks.subtask.Subtask;
+import tasks.TaskStatus;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SubtaskTest {
 
@@ -37,7 +38,7 @@ class SubtaskTest {
     }
 
     @Test
-    public void SubtaskAddInEpic() {
+    public void subtaskAddInEpic() {
         Subtask subtask1 = new Subtask(TaskStatus.NEW, "1", "2", 3);
         subtask1.setId(12);
         Epic epic = new Epic("1", "2");

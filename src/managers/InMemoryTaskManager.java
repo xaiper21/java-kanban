@@ -1,8 +1,8 @@
-package Managers;
+package managers;
 
-import Tasks.Epic.Epic;
-import Tasks.Subtask.Subtask;
-import Tasks.Task.Task;
+import tasks.epic.Epic;
+import tasks.subtask.Subtask;
+import tasks.task.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,12 +18,18 @@ public class InMemoryTaskManager implements TaskManager {
 
     private Map<Integer, Task> taskTable;
     private Map<Integer, Epic> epicTable;
-    HistoryManager historyManager;
+    private HistoryManager historyManager;
 
     public InMemoryTaskManager() {
         taskTable = new HashMap<>();
         epicTable = new HashMap<>();
         historyManager = new InMemoryHistoryManager();
+    }
+
+    public InMemoryTaskManager(HistoryManager historyManager) {
+        taskTable = new HashMap<>();
+        epicTable = new HashMap<>();
+        this.historyManager = historyManager;
     }
 
     @Override
@@ -57,17 +63,27 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void removeAllTasks() {
+        for (int taskId : taskTable.keySet()) {
+            historyManager.remove(taskId);
+        }
         taskTable.clear();
     }
 
     @Override
     public void removeAllEpics() {
+        removeAllSubtasks();
+        for (int epicId : epicTable.keySet()) {
+            historyManager.remove(epicId);
+        }
         epicTable.clear();
     }
 
     @Override
     public void removeAllSubtasks() {
         for (Epic epic : epicTable.values()) {
+            for (Subtask subtask : epic.getArrayListSubtasks()) {
+                historyManager.remove(subtask.getId());
+            }
             epic.removeAllSubtasks();
         }
     }
@@ -148,6 +164,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void removeSubtaskById(int id) {
+        historyManager.remove(id);
         for (Epic epic : epicTable.values()) {
             if (epic.isContainsSubtaskId(id)) {
                 epic.removeSubtaskById(id);
@@ -158,11 +175,18 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void removeTaskById(int id) {
+        historyManager.remove(id);
         taskTable.remove(id);
     }
 
     @Override
     public void removeEpicById(int id) {
+        Epic epic = epicTable.get(id);
+        ArrayList<Subtask> listSubtasks = epic.getArrayListSubtasks();
+        for (Subtask subtask : listSubtasks) {
+            historyManager.remove(subtask.getId());
+        }
+        historyManager.remove(id);
         epicTable.remove(id);
     }
 

@@ -1,6 +1,6 @@
-package Tasks.Task;
+package tasks.task;
 
-import Tasks.TaskStatus;
+import tasks.TaskStatus;
 
 import java.util.Objects;
 

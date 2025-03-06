@@ -1,11 +1,11 @@
-package Tests;
+package test;
 
-import Managers.Managers;
-import Managers.TaskManager;
-import Tasks.Epic.Epic;
-import Tasks.Subtask.Subtask;
-import Tasks.Task.Task;
-import Tasks.TaskStatus;
+import managers.Managers;
+import managers.TaskManager;
+import tasks.epic.Epic;
+import tasks.subtask.Subtask;
+import tasks.task.Task;
+import tasks.TaskStatus;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -50,5 +50,4 @@ class ManagersTest {
         inMemoryTaskManager.updateTask(task);
         assertEquals("name", inMemoryTaskManager.getHistory().get(0).getName());
     }
-
 }
