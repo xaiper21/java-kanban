@@ -1,4 +1,4 @@
-package Tests;
+package tests;
 
 import Tasks.Task.Task;
 import Tasks.TaskStatus;

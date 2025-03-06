@@ -1,4 +1,4 @@
-package Tests;
+package tests;
 
 import HistorySet.LinkedHistoryList;
 import HistorySet.Node;
