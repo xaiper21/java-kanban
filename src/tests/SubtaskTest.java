@@ -38,7 +38,7 @@ class SubtaskTest {
     }
 
     @Test
-    public void SubtaskAddInEpic() {
+    public void subtaskAddInEpic() {
         Subtask subtask1 = new Subtask(TaskStatus.NEW, "1", "2", 3);
         subtask1.setId(12);
         Epic epic = new Epic("1", "2");
