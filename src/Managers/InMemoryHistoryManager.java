@@ -1,6 +1,6 @@
 package Managers;
 
-import HistorySet.HistorySet;
+import historySet.HistorySet;
 import Tasks.Task.Task;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package HistorySet;
+package historySet;
 
 public class Node<T>{
     public T value;

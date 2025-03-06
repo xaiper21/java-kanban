@@ -1,4 +1,4 @@
-package HistorySet;
+package historySet;
 
 import Tasks.Task.Task;
 
