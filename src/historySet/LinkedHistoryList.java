@@ -1,6 +1,6 @@
 package historySet;
 
-import Tasks.Task.Task;
+import tasks.task.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,5 +56,4 @@ public class LinkedHistoryList<T extends Task> {
             node.next = null;
         }
     }
-
 }

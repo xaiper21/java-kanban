@@ -2,9 +2,9 @@ package tests;
 
 
 import historySet.HistorySet;
-import Managers.InMemoryTaskManager;
-import Tasks.Task.Task;
-import Tasks.TaskStatus;
+import managers.InMemoryTaskManager;
+import tasks.task.Task;
+import tasks.TaskStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +20,6 @@ public class HistorySetTest {
     Task task3 = new Task(TaskStatus.NEW, "3", "3");
 
     InMemoryTaskManager manager;
-
 
     @BeforeEach
     public void updateSet() {
@@ -124,5 +123,4 @@ public class HistorySetTest {
         assertEquals(List.of(task, task2), set.getList());
         assertEquals(2, set.getList().size());
     }
-
 }

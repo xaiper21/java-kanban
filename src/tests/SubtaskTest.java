@@ -1,8 +1,8 @@
 package tests;
 
-import Tasks.Epic.Epic;
-import Tasks.Subtask.Subtask;
-import Tasks.TaskStatus;
+import tasks.epic.Epic;
+import tasks.subtask.Subtask;
+import tasks.TaskStatus;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;

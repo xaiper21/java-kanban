@@ -1,11 +1,11 @@
-import Managers.HistoryManager;
-import Managers.InMemoryHistoryManager;
-import Managers.InMemoryTaskManager;
-import Managers.TaskManager;
-import Tasks.Epic.Epic;
-import Tasks.Subtask.Subtask;
-import Tasks.Task.Task;
-import Tasks.TaskStatus;
+import managers.HistoryManager;
+import managers.InMemoryHistoryManager;
+import managers.InMemoryTaskManager;
+import managers.TaskManager;
+import tasks.epic.Epic;
+import tasks.subtask.Subtask;
+import tasks.task.Task;
+import tasks.TaskStatus;
 
 public class Main {
 
@@ -70,14 +70,9 @@ public class Main {
         historyManager.remove(task1.getId());
         historyManager.remove(task2.getId());
 
-
         System.out.println(historyManager.getHistory());
         taskManager.removeEpicById(epicNoEmpty.getId());
 
         System.out.println(historyManager.getHistory());
-
-
     }
-
-
 }

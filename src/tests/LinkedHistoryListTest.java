@@ -2,8 +2,8 @@ package tests;
 
 import historySet.LinkedHistoryList;
 import historySet.Node;
-import Tasks.Task.Task;
-import Tasks.TaskStatus;
+import tasks.task.Task;
+import tasks.TaskStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -129,5 +129,4 @@ public class LinkedHistoryListTest {
         assertEquals(List.of(), list.getTasks());
         assertEquals(list.getTasks().size(), 0);
     }
-
 }
