@@ -1,10 +1,11 @@
-package Tests;
+package test;
 
-import Tasks.Task.Task;
-import Tasks.TaskStatus;
+import tasks.task.Task;
+import tasks.TaskStatus;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TaskTest {
 
