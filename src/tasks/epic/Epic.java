@@ -1,5 +1,6 @@
 package tasks.epic;
 
+import tasks.TaskType;
 import tasks.subtask.Subtask;
 import tasks.task.Task;
 import tasks.TaskStatus;
@@ -11,7 +12,7 @@ public class Epic extends Task {
     private HashMap<Integer, Subtask> subtasks;
 
     public Epic(String name, String description) {
-        super(TaskStatus.NEW, name, description);
+        super(TaskStatus.NEW, name, description, TaskType.Epic);
         subtasks = new HashMap<>();
     }
 

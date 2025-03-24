@@ -1,6 +1,7 @@
 package tasks.task;
 
 import tasks.TaskStatus;
+import tasks.TaskType;
 
 import java.util.Objects;
 
@@ -9,15 +10,25 @@ public class Task {
     protected String description;
     protected int id;
     protected TaskStatus status;
+    protected TaskType type;
 
     public String getName() {
         return name;
+    }
+
+    protected Task(TaskStatus status, String name, String description, TaskType type) {
+        this.name = name;
+        this.type = type;
+        this.description = description;
+        this.id = id;
+        this.status = status;
     }
 
     public Task(TaskStatus status, String name, String description) {
         this.status = status;
         this.name = name;
         this.description = description;
+        this.type = TaskType.Task;
     }
 
     public void setName(String name) {
@@ -58,5 +69,14 @@ public class Task {
     @Override
     public int hashCode() {
         return Objects.hash(name, description, id);
+    }
+
+    public TaskType getType() {
+        return type;
+    }
+
+    @Override
+    public String toString() {
+        return id + "," + type + "," + name + "," + status + "," + description + ",";
     }
 }
