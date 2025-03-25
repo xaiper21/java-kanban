@@ -12,13 +12,13 @@ import java.io.*;
 public class FileBackedTaskManager extends InMemoryTaskManager {
     File file;
 
-    public FileBackedTaskManager() {
+    public FileBackedTaskManager(File file) {
         super();
-
+        this.file = file;
     }
 
     public static FileBackedTaskManager loadFromFile(File file) {
-        FileBackedTaskManager manager = new FileBackedTaskManager();
+        FileBackedTaskManager manager = new FileBackedTaskManager(file);
         try (BufferedReader br = new BufferedReader(new FileReader(file.getName()))) {
             while (br.ready()) {
                 Task task = manager.fromString(br.readLine());
