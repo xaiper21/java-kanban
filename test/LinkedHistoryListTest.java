@@ -2,10 +2,10 @@ package test;
 
 import history.LinkedHistoryList;
 import history.Node;
-import tasks.task.Task;
-import tasks.TaskStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tasks.TaskStatus;
+import tasks.task.Task;
 
 import java.util.List;
 

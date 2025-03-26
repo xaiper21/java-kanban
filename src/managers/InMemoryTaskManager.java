@@ -16,14 +16,18 @@ public class InMemoryTaskManager implements TaskManager {
         return ++identifier;
     }
 
-    private Map<Integer, Task> taskTable;
-    private Map<Integer, Epic> epicTable;
-    private HistoryManager historyManager;
+    protected Map<Integer, Task> taskTable;
+    protected Map<Integer, Epic> epicTable;
+    protected HistoryManager historyManager;
 
     public InMemoryTaskManager() {
         taskTable = new HashMap<>();
         epicTable = new HashMap<>();
         historyManager = new InMemoryHistoryManager();
+    }
+
+    public void setIdentifier(int identifier) {
+        this.identifier = identifier;
     }
 
     public InMemoryTaskManager(HistoryManager historyManager) {
@@ -119,7 +123,7 @@ public class InMemoryTaskManager implements TaskManager {
         addTask(task, getIdentifier());
     }
 
-    public void addTask(Task task, int id) {
+    protected void addTask(Task task, int id) {
         if (task == null) return;
         task.setId(id);
         switch (task.getType()) {

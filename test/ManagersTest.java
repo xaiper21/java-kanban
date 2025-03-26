@@ -2,11 +2,11 @@ package test;
 
 import managers.Managers;
 import managers.TaskManager;
+import org.junit.jupiter.api.Test;
+import tasks.TaskStatus;
 import tasks.epic.Epic;
 import tasks.subtask.Subtask;
 import tasks.task.Task;
-import tasks.TaskStatus;
-import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

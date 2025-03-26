@@ -19,19 +19,26 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     public static FileBackedTaskManager loadFromFile(File file) {
         FileBackedTaskManager manager = new FileBackedTaskManager(file);
-        try (BufferedReader br = new BufferedReader(new FileReader(file.getName()))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            int maxId = 0;
+            if (br.ready()) {
+                br.readLine();
+            }
             while (br.ready()) {
                 Task task = manager.fromString(br.readLine());
-                manager.addTask(task, task.getId());
+                if (maxId < task.getId()) maxId = task.getId();
+                manager.addTask(task);
             }
+            manager.setIdentifier(maxId);
             return manager;
         } catch (Exception e) {
-            return manager;
+            throw new ManagerSaveException(e.getMessage());
         }
     }
 
     public void save() throws ManagerSaveException {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getName(), true))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getName()))) {
+            bw.write("id,type,name,status,description,epic\n");
             for (Task task : super.getListAllTalks()) {
                 bw.write(task.toString() + "\n");
             }
@@ -42,11 +49,11 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 bw.write(task.toString() + "\n");
             }
         } catch (IOException e) {
-            throw new ManagerSaveException();
+            throw new ManagerSaveException("Ошибка при сохранении тасок");
         }
     }
 
-    public Task fromString(String value) {
+    private Task fromString(String value) {
         String[] valuesString = value.split(",");
         int id = Integer.parseInt(valuesString[0]);
         TaskType type = getTypeFromString(valuesString[1]);
@@ -93,17 +100,73 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void addTask(Task task, int id) {
-        try {
-            super.addTask(task, id);
-            save();
-        } catch (ManagerSaveException e) {
-            //
-        }
+    public void addTask(Task task) {
+        super.addTask(task, task.getId());
+        save();
     }
 
-    private void saveTask(Task task) {
-
+    @Override
+    public void addEpic(Epic epic) {
+        addTask(epic);
     }
 
+    @Override
+    public void addSubtask(Subtask subtask) {
+        addTask(subtask);
+    }
+
+
+    @Override
+    public void removeAllTasks() {
+        super.removeAllTasks();
+        save();
+    }
+
+    @Override
+    public void removeAllEpics() {
+        super.removeAllEpics();
+        save();
+    }
+
+    @Override
+    public void removeAllSubtasks() {
+        super.removeAllSubtasks();
+        save();
+    }
+
+    @Override
+    public void updateTask(Task task) {
+        super.updateTask(task);
+        save();
+    }
+
+    @Override
+    public void updateEpic(Epic epic) {
+        super.updateEpic(epic);
+        save();
+    }
+
+    @Override
+    public void updateSubtask(Subtask subtask) {
+        super.updateSubtask(subtask);
+        save();
+    }
+
+    @Override
+    public void removeSubtaskById(int id) {
+        super.removeSubtaskById(id);
+        save();
+    }
+
+    @Override
+    public void removeTaskById(int id) {
+        super.removeTaskById(id);
+        save();
+    }
+
+    @Override
+    public void removeEpicById(int id) {
+        super.removeEpicById(id);
+        save();
+    }
 }
