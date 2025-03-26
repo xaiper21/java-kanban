@@ -26,7 +26,7 @@ public class InMemoryTaskManager implements TaskManager {
         historyManager = new InMemoryHistoryManager();
     }
 
-    public void setIdentifier(int identifier) {
+    protected void setIdentifier(int identifier) {
         this.identifier = identifier;
     }
 

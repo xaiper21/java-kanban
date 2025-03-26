@@ -27,7 +27,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             while (br.ready()) {
                 Task task = manager.fromString(br.readLine());
                 if (maxId < task.getId()) maxId = task.getId();
-                manager.addTask(task);
+                manager.addTask(task, task.getId());
             }
             manager.setIdentifier(maxId);
             return manager;
@@ -107,12 +107,14 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     @Override
     public void addEpic(Epic epic) {
-        addTask(epic);
+        super.addEpic(epic);
+        save();
     }
 
     @Override
     public void addSubtask(Subtask subtask) {
-        addTask(subtask);
+        super.addSubtask(subtask);
+        save();
     }
 
 
