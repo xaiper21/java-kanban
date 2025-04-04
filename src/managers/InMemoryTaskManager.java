@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class InMemoryTaskManager implements TaskManager {
     private int identifier = 0;
@@ -37,32 +38,20 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public List<Task> getListAllTalks() {
-        List<Task> tasks = new ArrayList<>();
-        for (Task task : taskTable.values()) {
-            tasks.add(task);
-        }
-        return tasks;
+    public List<Task> getListAllTasks() {
+        return taskTable.values().stream().collect(Collectors.toList());
     }
 
     @Override
     public List<Epic> getListAllEpics() {
-        List<Epic> epics = new ArrayList<>();
-        for (Epic epic : epicTable.values()) {
-            epics.add(epic);
-        }
-        return epics;
+        return epicTable.values().stream().collect(Collectors.toList());
     }
 
     @Override
     public List<Subtask> getListAllSubtasks() {
-        List<Subtask> subtasks = new ArrayList<>();
-        for (Epic epic : epicTable.values()) {
-            for (Subtask subtask : epic.getArrayListSubtasks()) {
-                subtasks.add(subtask);
-            }
-        }
-        return subtasks;
+       return epicTable.values().stream()
+               .flatMap(epic -> epic.getArrayListSubtasks().stream())
+               .collect(Collectors.toList());
     }
 
     @Override

@@ -41,7 +41,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     public void save() throws ManagerSaveException {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getName()))) {
             bw.write("id,type,name,status,description,startTime,duration(Minutes),epic\n");
-            for (Task task : super.getListAllTalks()) {
+            for (Task task : super.getListAllTasks()) {
                 bw.write(task.toString() + "\n");
             }
             for (Task task : super.getListAllEpics()) {

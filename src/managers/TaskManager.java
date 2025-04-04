@@ -7,7 +7,7 @@ import tasks.task.Task;
 import java.util.List;
 
 public interface TaskManager {
-    List<Task> getListAllTalks();
+    List<Task> getListAllTasks();
 
     List<Epic> getListAllEpics();
 
