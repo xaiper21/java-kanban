@@ -8,6 +8,8 @@ import tasks.subtask.Subtask;
 import tasks.task.Task;
 
 import java.io.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
     File file;
@@ -38,7 +40,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     public void save() throws ManagerSaveException {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getName()))) {
-            bw.write("id,type,name,status,description,epic\n");
+//            ""id,type,name,status,description,startTime,duration,epic"
+            bw.write("id,type,name,status,description,epic,startTime,duration\n");
             for (Task task : super.getListAllTalks()) {
                 bw.write(task.toString() + "\n");
             }
@@ -55,12 +58,23 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private Task fromString(String value) {
         String[] valuesString = value.split(",");
-        int id = Integer.parseInt(valuesString[0]);
-        TaskType type = getTypeFromString(valuesString[1]);
-        String name = valuesString[2];
-        TaskStatus status = getStatusFromString(valuesString[3]);
-        String description = valuesString[4];
-        Integer idEpic = getIdMyEpicFromString(valuesString, type);
+        final int NUM_ID = 0;
+        final int NUM_TYPE = 1;
+        final int NUM_NAME = 2;
+        final int NUM_STATUS = 3;
+        final int NUM_DESCRIPTION = 4;
+        final int NUM_START_TIME = 5;
+        final int NUM_DURATION = 6;
+        final int NUM_EPIC = 7;
+
+        int id = Integer.parseInt(valuesString[NUM_ID]);
+        TaskType type = getTypeFromString(valuesString[NUM_TYPE]);
+        String name = valuesString[NUM_NAME];
+        TaskStatus status = getStatusFromString(valuesString[NUM_STATUS]);
+        String description = valuesString[NUM_DESCRIPTION];
+        Integer idEpic = getIdMyEpicFromString(valuesString[NUM_EPIC], type);
+        LocalDateTime startTime = LocalDateTime.parse(valuesString[NUM_START_TIME]);
+        Duration duration = Duration.parse(valuesString[NUM_DURATION]);
         Task task;
         if (type == TaskType.Subtask) {
             task = new Subtask(status, name, description, idEpic);
@@ -70,6 +84,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             task = new Epic(name, description);
         }
         task.setId(id);
+        task.setDuration(duration);
+        task.setStartTime(startTime);
         return task;
     }
 
@@ -94,9 +110,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         }
     }
 
-    private Integer getIdMyEpicFromString(String[] value, TaskType type) {
+    private Integer getIdMyEpicFromString(String value, TaskType type) {
         if (type != TaskType.Subtask) return null;
-        return Integer.parseInt(value[5]);
+        return Integer.parseInt(value);
     }
 
     @Override

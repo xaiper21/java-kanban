@@ -80,7 +80,16 @@ public class Task {
 
     @Override
     public String toString() {
-        return id + "," + type + "," + name + "," + status + "," + description + ",";
+        return String.join(",", "" + id, type.toString(), name, status.toString(),
+                description, startTime.toString(), duration.toString() + ",");
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
     }
 
     public LocalDateTime getEndTime() {

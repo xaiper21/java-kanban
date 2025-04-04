@@ -1,8 +1,8 @@
 package tasks.subtask;
 
+import tasks.TaskStatus;
 import tasks.TaskType;
 import tasks.task.Task;
-import tasks.TaskStatus;
 
 public class Subtask extends Task {
     private int idMyEpic;
