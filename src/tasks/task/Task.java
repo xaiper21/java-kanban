@@ -3,6 +3,8 @@ package tasks.task;
 import tasks.TaskStatus;
 import tasks.TaskType;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Task {
@@ -11,6 +13,8 @@ public class Task {
     protected int id;
     protected TaskStatus status;
     protected TaskType type;
+    protected Duration duration;
+    protected LocalDateTime startTime;
 
     public String getName() {
         return name;
@@ -20,7 +24,6 @@ public class Task {
         this.name = name;
         this.type = type;
         this.description = description;
-        this.id = id;
         this.status = status;
     }
 
@@ -78,5 +81,16 @@ public class Task {
     @Override
     public String toString() {
         return id + "," + type + "," + name + "," + status + "," + description + ",";
+    }
+
+    public LocalDateTime getEndTime() {
+        return startTime.plus(duration);
+    }
+
+    public void setTime() {
+        switch (status) {
+            case IN_PROGRESS -> startTime = LocalDateTime.now();
+            case DONE -> duration = Duration.between(startTime, LocalDateTime.now());
+        }
     }
 }

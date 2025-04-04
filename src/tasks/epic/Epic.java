@@ -1,9 +1,9 @@
 package tasks.epic;
 
+import tasks.TaskStatus;
 import tasks.TaskType;
 import tasks.subtask.Subtask;
 import tasks.task.Task;
-import tasks.TaskStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +41,7 @@ public class Epic extends Task {
         } else if (!isProgress && !isNew) {
             this.status = TaskStatus.DONE;
         } else this.status = TaskStatus.IN_PROGRESS;
+        setTime();
     }
 
     public void removeAllSubtasks() {

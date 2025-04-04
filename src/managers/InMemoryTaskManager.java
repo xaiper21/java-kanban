@@ -152,6 +152,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void updateTask(Task task) {
         if (taskTable.containsValue(task)) {
+            task.setTime();
             taskTable.put(task.getId(), task);
         }
     }
@@ -172,6 +173,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (epicTable.get(subtask.getIdMyEpic()).isContainsSubtaskId(subtask.getId())) {
             epicTable.get(subtask.getIdMyEpic()).addSubtask(subtask);
         }
+        subtask.setTime();
     }
 
     @Override
@@ -214,4 +216,5 @@ public class InMemoryTaskManager implements TaskManager {
     public List<Task> getHistory() {
         return historyManager.getHistory();
     }
+
 }
