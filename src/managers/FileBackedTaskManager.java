@@ -40,8 +40,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     public void save() throws ManagerSaveException {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getName()))) {
-//            ""id,type,name,status,description,startTime,duration,epic"
-            bw.write("id,type,name,status,description,epic,startTime,duration\n");
+            bw.write("id,type,name,status,description,startTime,duration(Minutes),epic\n");
             for (Task task : super.getListAllTalks()) {
                 bw.write(task.toString() + "\n");
             }
@@ -74,7 +73,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String description = valuesString[NUM_DESCRIPTION];
         Integer idEpic = getIdMyEpicFromString(valuesString[NUM_EPIC], type);
         LocalDateTime startTime = LocalDateTime.parse(valuesString[NUM_START_TIME]);
-        Duration duration = Duration.parse(valuesString[NUM_DURATION]);
+        Duration duration = Duration.ofMinutes(Integer.parseInt(valuesString[NUM_DURATION]));
         Task task;
         if (type == TaskType.Subtask) {
             task = new Subtask(status, name, description, idEpic);

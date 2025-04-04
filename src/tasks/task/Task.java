@@ -81,7 +81,7 @@ public class Task {
     @Override
     public String toString() {
         return String.join(",", "" + id, type.toString(), name, status.toString(),
-                description, startTime.toString(), duration.toString() + ",");
+                description, startTime.toString(), duration.toMinutes() + ",");
     }
 
     public void setDuration(Duration duration) {
