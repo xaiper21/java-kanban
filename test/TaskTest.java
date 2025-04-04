@@ -1,8 +1,8 @@
 package test;
 
-import tasks.task.Task;
-import tasks.TaskStatus;
 import org.junit.jupiter.api.Test;
+import tasks.TaskStatus;
+import tasks.task.Task;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

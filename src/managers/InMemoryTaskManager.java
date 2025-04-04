@@ -16,14 +16,18 @@ public class InMemoryTaskManager implements TaskManager {
         return ++identifier;
     }
 
-    private Map<Integer, Task> taskTable;
-    private Map<Integer, Epic> epicTable;
-    private HistoryManager historyManager;
+    protected Map<Integer, Task> taskTable;
+    protected Map<Integer, Epic> epicTable;
+    protected HistoryManager historyManager;
 
     public InMemoryTaskManager() {
         taskTable = new HashMap<>();
         epicTable = new HashMap<>();
         historyManager = new InMemoryHistoryManager();
+    }
+
+    protected void setIdentifier(int identifier) {
+        this.identifier = identifier;
     }
 
     public InMemoryTaskManager(HistoryManager historyManager) {
@@ -116,25 +120,33 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void addTask(Task task) {
+        addTask(task, getIdentifier());
+    }
+
+    protected void addTask(Task task, int id) {
         if (task == null) return;
-        task.setId(getIdentifier());
-        taskTable.put(task.getId(), task);
+        task.setId(id);
+        switch (task.getType()) {
+            case Task -> taskTable.put(task.getId(), task);
+            case Epic -> epicTable.put(task.getId(), (Epic) task);
+            case Subtask -> {
+                Subtask subtask = (Subtask) task;
+                if (epicTable.containsKey(subtask.getIdMyEpic())) {
+                    subtask.setId(id);
+                    epicTable.get(subtask.getIdMyEpic()).addSubtask(subtask);
+                }
+            }
+        }
     }
 
     @Override
     public void addEpic(Epic epic) {
-        if (epic == null) return;
-        epic.setId(getIdentifier());
-        epicTable.put(epic.getId(), epic);
+        addTask(epic, getIdentifier());
     }
 
     @Override
     public void addSubtask(Subtask subtask) {
-        if (subtask == null) return;
-        if (epicTable.containsKey(subtask.getIdMyEpic())) {
-            subtask.setId(getIdentifier());
-            epicTable.get(subtask.getIdMyEpic()).addSubtask(subtask);
-        }
+        addTask(subtask, getIdentifier());
     }
 
     @Override

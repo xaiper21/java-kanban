@@ -3,14 +3,15 @@ package test;
 
 import history.HistorySet;
 import managers.InMemoryTaskManager;
-import tasks.task.Task;
-import tasks.TaskStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tasks.TaskStatus;
+import tasks.task.Task;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class HistorySetTest {
 
