@@ -80,8 +80,16 @@ public class Task {
 
     @Override
     public String toString() {
+        String startTimeStr;
+        String durationStr;
+        if (startTime == null) {
+            startTimeStr = "null";
+        } else startTimeStr = startTime.toString();
+        if (duration == null) {
+            durationStr = "null";
+        } else durationStr = ""+duration.toMinutes();
         return String.join(",", "" + id, type.toString(), name, status.toString(),
-                description, startTime.toString(), duration.toMinutes() + ",");
+                description, startTimeStr, durationStr + ",");
     }
 
     public void setDuration(Duration duration) {

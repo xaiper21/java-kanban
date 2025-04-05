@@ -72,8 +72,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         TaskStatus status = getStatusFromString(valuesString[NUM_STATUS]);
         String description = valuesString[NUM_DESCRIPTION];
         Integer idEpic = getIdMyEpicFromString(valuesString[NUM_EPIC], type);
-        LocalDateTime startTime = LocalDateTime.parse(valuesString[NUM_START_TIME]);
-        Duration duration = Duration.ofMinutes(Integer.parseInt(valuesString[NUM_DURATION]));
+        LocalDateTime startTime = getDateTimeFromString(valuesString[NUM_START_TIME]);
+        Duration duration = getDurationFromString(valuesString[NUM_DURATION]);
         Task task;
         if (type == TaskType.Subtask) {
             task = new Subtask(status, name, description, idEpic);
@@ -88,6 +88,15 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         return task;
     }
 
+    private Duration getDurationFromString(String value) {
+        if (value.equals("null")) return null;
+        return Duration.ofMinutes(Long.parseLong(value));
+    }
+
+    private LocalDateTime getDateTimeFromString(String value) {
+        if (value.equals("null")) return null;
+        return LocalDateTime.parse(value);
+    }
 
     private TaskType getTypeFromString(String value) {
         if (value.equals("Subtask")) {

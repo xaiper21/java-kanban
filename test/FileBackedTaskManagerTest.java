@@ -22,7 +22,7 @@ public class FileBackedTaskManagerTest {
 
     @Test
     public void loadEmptyFile() {
-        assertTrue(manager.getListAllTalks().isEmpty());
+        assertTrue(manager.getListAllTasks().isEmpty());
         assertTrue(manager.getListAllEpics().isEmpty());
         assertTrue(manager.getListAllSubtasks().isEmpty());
     }
