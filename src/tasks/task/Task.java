@@ -7,7 +7,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Task {
+public class Task implements Comparable<Task>{
     protected String name;
     protected String description;
     protected int id;
@@ -28,10 +28,7 @@ public class Task {
     }
 
     public Task(TaskStatus status, String name, String description) {
-        this.status = status;
-        this.name = name;
-        this.description = description;
-        this.type = TaskType.Task;
+        this(status,name,description,TaskType.Task);
     }
 
     public void setName(String name) {
@@ -109,5 +106,11 @@ public class Task {
             case IN_PROGRESS -> startTime = LocalDateTime.now();
             case DONE -> duration = Duration.between(startTime, LocalDateTime.now());
         }
+    }
+
+    @Override
+    public int compareTo(Task o) {
+        if (this.startTime.isBefore(o.startTime)) return  1;
+        return  -1;
     }
 }
