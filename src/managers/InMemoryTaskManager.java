@@ -4,6 +4,7 @@ import tasks.epic.Epic;
 import tasks.subtask.Subtask;
 import tasks.task.Task;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -229,5 +230,9 @@ public class InMemoryTaskManager implements TaskManager {
     private void removePrioritizedTask(Task task){
         prioritizedTasks.remove(task);
     }
+
+//    public boolean intersectionCheckTime(Task t1,Task t2){
+//
+//    }
 
 }

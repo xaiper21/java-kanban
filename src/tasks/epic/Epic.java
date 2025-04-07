@@ -33,12 +33,12 @@ public class Epic extends Task {
             switch (statusSubtask) {
                 case TaskStatus.DONE -> isDone = true;
                 case TaskStatus.IN_PROGRESS -> isProgress = true;
-                case null, default -> isNew = true;
+                case TaskStatus.NEW-> isNew = true;
             }
         }
         if (!isProgress && !isDone) {
             this.status = TaskStatus.NEW;
-        } else if (!isProgress && !isNew) {
+        } else if (!isProgress && !isNew ) {
             this.status = TaskStatus.DONE;
         } else this.status = TaskStatus.IN_PROGRESS;
         setTime();

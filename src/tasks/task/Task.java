@@ -104,7 +104,9 @@ public class Task implements Comparable<Task>{
     public void setTime() {
         switch (status) {
             case IN_PROGRESS -> startTime = LocalDateTime.now();
-            case DONE -> duration = Duration.between(startTime, LocalDateTime.now());
+            case DONE -> {
+                if (startTime != null) duration = Duration.between(startTime, LocalDateTime.now());
+            }
         }
     }
 
