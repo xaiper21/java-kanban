@@ -7,7 +7,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Task implements Comparable<Task>{
+public class Task implements Comparable<Task> {
     protected String name;
     protected String description;
     protected int id;
@@ -20,15 +20,22 @@ public class Task implements Comparable<Task>{
         return name;
     }
 
-    protected Task(TaskStatus status, String name, String description, TaskType type) {
+    protected Task(TaskStatus status, String name, String description, TaskType type,
+                   LocalDateTime startTime, Duration duration) {
         this.name = name;
         this.type = type;
         this.description = description;
         this.status = status;
+        this.startTime = startTime;
+        this.duration = duration;
     }
 
     public Task(TaskStatus status, String name, String description) {
-        this(status,name,description,TaskType.Task);
+        this(status, name, description, TaskType.Task, null, null);
+    }
+
+    public Task(TaskStatus status, String name, String description, LocalDateTime startTime, Duration duration) {
+        this(status, name, description, TaskType.Task, startTime, duration);
     }
 
     public void setName(String name) {
@@ -84,7 +91,7 @@ public class Task implements Comparable<Task>{
         } else startTimeStr = startTime.toString();
         if (duration == null) {
             durationStr = "null";
-        } else durationStr = ""+duration.toMinutes();
+        } else durationStr = "" + duration.toMinutes();
         return String.join(",", "" + id, type.toString(), name, status.toString(),
                 description, startTimeStr, durationStr + ",");
     }
@@ -101,18 +108,18 @@ public class Task implements Comparable<Task>{
         return startTime.plus(duration);
     }
 
-    public void setTime() {
-        switch (status) {
-            case IN_PROGRESS -> startTime = LocalDateTime.now();
-            case DONE -> {
-                if (startTime != null) duration = Duration.between(startTime, LocalDateTime.now());
-            }
-        }
-    }
-
     @Override
     public int compareTo(Task o) {
-        if (this.startTime.isBefore(o.startTime)) return  1;
-        return  -1;
+        if (id == o.getId()) return 0;
+        if (startTime.isBefore(o.getStartTime())) return 1;
+        return -1;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
     }
 }
