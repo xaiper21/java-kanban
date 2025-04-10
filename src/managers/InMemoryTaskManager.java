@@ -145,10 +145,11 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateTask(Task task) {
-        if (taskTable.containsValue(task)) {
+        removePrioritizedTask(task);
+        if (taskTable.containsValue(task) && intersectionCheckFromPrioritizedTasks(task)) {
             taskTable.put(task.getId(), task);
+            addPrioritizedTask(task);
         }
-        if (intersectionCheckFromPrioritizedTasks(task)) addPrioritizedTask(task);
     }
 
     @Override
@@ -164,6 +165,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void updateSubtask(Subtask subtask) {
         if (subtask == null) return;
         if (!epicTable.containsKey(subtask.getIdMyEpic())) return;
+        removePrioritizedTask(subtask);
         if (epicTable.get(subtask.getIdMyEpic()).isContainsSubtaskId(subtask.getId())
                 && intersectionCheckFromPrioritizedTasks(subtask)) {
             epicTable.get(subtask.getIdMyEpic()).addSubtask(subtask);
@@ -229,11 +231,11 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private boolean intersectionCheckTime(Task t1, Task t2) {
-        if (t1.getStartTime() == null || t2.getStartTime() == null) return false;
         return !(t1.getEndTime().isBefore(t2.getStartTime()) || t1.getStartTime().isAfter(t2.getEndTime()));
     }
 
     public boolean intersectionCheckFromPrioritizedTasks(Task task) {
+        if (task.getStartTime() == null) return true;
         for (Task task1 : prioritizedTasks) {
             if (intersectionCheckTime(task1, task)) return false;
         }

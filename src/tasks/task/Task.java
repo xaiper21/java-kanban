@@ -112,8 +112,8 @@ public class Task implements Comparable<Task> {
     @Override
     public int compareTo(Task o) {
         if (id == o.getId()) return 0;
-        if (startTime.isBefore(o.getStartTime())) return 1;
-        return -1;
+        if (startTime.isBefore(o.getStartTime())) return -1;
+        return 1;
     }
 
     public Duration getDuration() {
