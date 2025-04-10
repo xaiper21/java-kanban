@@ -108,8 +108,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void addTask(Task task) {
-        addTask(task, getIdentifier());
-        if (!intersectionCheckFromPrioritizedTasks(task)) addPrioritizedTask(task);
+        if (intersectionCheckFromPrioritizedTasks(task)) {
+            addTask(task, getIdentifier());
+            addPrioritizedTask(task);
+        }
     }
 
     protected void addTask(Task task, int id) {
@@ -135,8 +137,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void addSubtask(Subtask subtask) {
-        addTask(subtask, getIdentifier());
-        if (!intersectionCheckFromPrioritizedTasks(subtask)) addPrioritizedTask(subtask);
+        if (intersectionCheckFromPrioritizedTasks(subtask)) {
+            addTask(subtask, getIdentifier());
+            addPrioritizedTask(subtask);
+        }
     }
 
     @Override
@@ -144,7 +148,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (taskTable.containsValue(task)) {
             taskTable.put(task.getId(), task);
         }
-        if (!intersectionCheckFromPrioritizedTasks(task)) addPrioritizedTask(task);
+        if (intersectionCheckFromPrioritizedTasks(task)) addPrioritizedTask(task);
     }
 
     @Override
@@ -160,10 +164,11 @@ public class InMemoryTaskManager implements TaskManager {
     public void updateSubtask(Subtask subtask) {
         if (subtask == null) return;
         if (!epicTable.containsKey(subtask.getIdMyEpic())) return;
-        if (epicTable.get(subtask.getIdMyEpic()).isContainsSubtaskId(subtask.getId())) {
+        if (epicTable.get(subtask.getIdMyEpic()).isContainsSubtaskId(subtask.getId())
+                && intersectionCheckFromPrioritizedTasks(subtask)) {
             epicTable.get(subtask.getIdMyEpic()).addSubtask(subtask);
+            addPrioritizedTask(subtask);
         }
-        if (!intersectionCheckFromPrioritizedTasks(subtask)) addPrioritizedTask(subtask);
     }
 
     @Override
@@ -190,6 +195,7 @@ public class InMemoryTaskManager implements TaskManager {
         Epic epic = epicTable.get(id);
         ArrayList<Subtask> listSubtasks = epic.getArrayListSubtasks();
         for (Subtask subtask : listSubtasks) {
+            removePrioritizedTask(subtask);
             historyManager.remove(subtask.getId());
         }
         historyManager.remove(id);
@@ -223,13 +229,14 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private boolean intersectionCheckTime(Task t1, Task t2) {
+        if (t1.getStartTime() == null || t2.getStartTime() == null) return false;
         return !(t1.getEndTime().isBefore(t2.getStartTime()) || t1.getStartTime().isAfter(t2.getEndTime()));
     }
 
     public boolean intersectionCheckFromPrioritizedTasks(Task task) {
         for (Task task1 : prioritizedTasks) {
-            if (intersectionCheckTime(task1, task)) return true;
+            if (intersectionCheckTime(task1, task)) return false;
         }
-        return false;
+        return true;
     }
 }
