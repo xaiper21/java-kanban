@@ -7,7 +7,7 @@ import tasks.task.Task;
 import java.util.List;
 
 public interface TaskManager {
-    List<Task> getListAllTalks();
+    List<Task> getListAllTasks();
 
     List<Epic> getListAllEpics();
 
@@ -31,11 +31,11 @@ public interface TaskManager {
 
     void addSubtask(Subtask subtask);
 
-    void updateTask(Task task);
+    void updateTask(Task task);///
 
-    void updateEpic(Epic epic);
+    void updateEpic(Epic epic);///
 
-    void updateSubtask(Subtask subtask);
+    void updateSubtask(Subtask subtask);///
 
     void removeSubtaskById(int id);
 
@@ -45,5 +45,5 @@ public interface TaskManager {
 
     List<Subtask> getListSubtasksByIdEpic(int id);
 
-    List<Task> getHistory();
+    List<Task> getHistory();///
 }

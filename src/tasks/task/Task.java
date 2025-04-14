@@ -3,32 +3,39 @@ package tasks.task;
 import tasks.TaskStatus;
 import tasks.TaskType;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Task {
+public class Task implements Comparable<Task> {
     protected String name;
     protected String description;
     protected int id;
     protected TaskStatus status;
     protected TaskType type;
+    protected Duration duration;
+    protected LocalDateTime startTime;
 
     public String getName() {
         return name;
     }
 
-    protected Task(TaskStatus status, String name, String description, TaskType type) {
+    protected Task(TaskStatus status, String name, String description, TaskType type,
+                   LocalDateTime startTime, Duration duration) {
         this.name = name;
         this.type = type;
         this.description = description;
-        this.id = id;
         this.status = status;
+        this.startTime = startTime;
+        this.duration = duration;
     }
 
     public Task(TaskStatus status, String name, String description) {
-        this.status = status;
-        this.name = name;
-        this.description = description;
-        this.type = TaskType.Task;
+        this(status, name, description, TaskType.Task, null, null);
+    }
+
+    public Task(TaskStatus status, String name, String description, LocalDateTime startTime, Duration duration) {
+        this(status, name, description, TaskType.Task, startTime, duration);
     }
 
     public void setName(String name) {
@@ -77,6 +84,43 @@ public class Task {
 
     @Override
     public String toString() {
-        return id + "," + type + "," + name + "," + status + "," + description + ",";
+        String startTimeStr;
+        String durationStr;
+        if (startTime == null) {
+            startTimeStr = "null";
+        } else startTimeStr = startTime.toString();
+        if (duration == null) {
+            durationStr = "null";
+        } else durationStr = "" + duration.toMinutes();
+        return String.join(",", "" + id, type.toString(), name, status.toString(),
+                description, startTimeStr, durationStr + ",");
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        if (startTime == null) return null;
+        return startTime.plus(duration);
+    }
+
+    @Override
+    public int compareTo(Task o) {
+        if (id == o.getId()) return 0;
+        if (startTime.isBefore(o.getStartTime())) return -1;
+        return 1;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
     }
 }

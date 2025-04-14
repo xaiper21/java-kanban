@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertTrue;
 
-public class FileBackedTaskManagerTest {
+public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager>{
 
     File file = File.createTempFile("xxx", ".txt");
     FileBackedTaskManager manager = FileBackedTaskManager.loadFromFile(file);
@@ -22,7 +22,7 @@ public class FileBackedTaskManagerTest {
 
     @Test
     public void loadEmptyFile() {
-        assertTrue(manager.getListAllTalks().isEmpty());
+        assertTrue(manager.getListAllTasks().isEmpty());
         assertTrue(manager.getListAllEpics().isEmpty());
         assertTrue(manager.getListAllSubtasks().isEmpty());
     }
@@ -53,5 +53,10 @@ public class FileBackedTaskManagerTest {
         Subtask subtask = new Subtask(TaskStatus.NEW, "2", "10", epic.getId());
         manager.addSubtask(subtask);
         Assertions.assertTrue(subtask.equals(manager.getSubtaskById(subtask.getId())));
+    }
+
+    @Override
+    protected FileBackedTaskManager createTaskManager() {
+        return new FileBackedTaskManager(file);
     }
 }
