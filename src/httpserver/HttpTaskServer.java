@@ -20,7 +20,7 @@ public class HttpTaskServer {
         this.manager = manager;
     }
 
-    public void start(){
+    public void start() {
         try {
             server = HttpServer.create(new InetSocketAddress(PORT), 0);
             server.createContext("/tasks", new TaskHandler(manager));
@@ -35,7 +35,7 @@ public class HttpTaskServer {
         }
     }
 
-    public void stop(){
+    public void stop() {
         server.stop(10);
     }
 }
