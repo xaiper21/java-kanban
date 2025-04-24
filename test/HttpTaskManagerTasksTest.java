@@ -1,6 +1,8 @@
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import httpserver.HttpTaskServer;
-import httpserver.handlers.taskshandlers.BaseTaskHandler;
+import httpserver.handlers.taskshandlers.gson_adapters.DurationAdapter;
+import httpserver.handlers.taskshandlers.gson_adapters.LocalDateTimeAdapter;
 import managers.InMemoryTaskManager;
 import managers.TaskManager;
 import org.junit.jupiter.api.AfterEach;
@@ -27,7 +29,12 @@ public class HttpTaskManagerTasksTest {
     TaskManager manager = new InMemoryTaskManager();
     // передаём его в качестве аргумента в конструктор HttpTaskServer
     HttpTaskServer taskServer = new HttpTaskServer(manager);
-    Gson gson = BaseTaskHandler.getGson();
+    Gson gson = new GsonBuilder()
+            .serializeNulls()
+            .setPrettyPrinting()
+            .registerTypeAdapter(Duration.class, new DurationAdapter())
+            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+            .create();
 
     public HttpTaskManagerTasksTest() throws IOException {
     }

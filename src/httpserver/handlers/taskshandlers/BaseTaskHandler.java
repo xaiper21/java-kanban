@@ -1,13 +1,9 @@
 package httpserver.handlers.taskshandlers;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
 import exeption.IntersectionCheckFromPrioritizedTasksException;
 import exeption.RequestValidityException;
 import httpserver.handlers.BaseHttpHandler;
-import httpserver.handlers.taskshandlers.gson_adapters.DurationAdapter;
-import httpserver.handlers.taskshandlers.gson_adapters.LocalDateTimeAdapter;
 import managers.TaskManager;
 import tasks.task.Task;
 
@@ -15,20 +11,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseTaskHandler extends BaseHttpHandler {
     protected TaskManager manager;
-    protected final Gson gson = new GsonBuilder()
-                .serializeNulls()
-                .setPrettyPrinting()
-                .registerTypeAdapter(Duration.class, new DurationAdapter())
-            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
-            .create();
 
     public BaseTaskHandler(TaskManager manager) {
         this.manager = manager;
@@ -68,10 +56,10 @@ public abstract class BaseTaskHandler extends BaseHttpHandler {
                 throw new IntersectionCheckFromPrioritizedTasksException();
             if (task.getId() == 0) {
                 addTask(task);
-                send(exchange,"задача добавлена успешно",200);
+                send(exchange, "задача добавлена успешно", 200);
             } else {
                 updateTask(task);
-                send(exchange,"задача обновлена успешно",200);
+                send(exchange, "задача обновлена успешно", 200);
             }
 
         } catch (IOException e) {
@@ -109,8 +97,4 @@ public abstract class BaseTaskHandler extends BaseHttpHandler {
     protected abstract void deleteTask(int id);
 
     protected abstract void addTask(Task task);
-
-    public  Gson getGson() {
-        return gson;
-    }
 }

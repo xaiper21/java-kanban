@@ -1,12 +1,24 @@
 package httpserver.handlers;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import httpserver.handlers.taskshandlers.gson_adapters.DurationAdapter;
+import httpserver.handlers.taskshandlers.gson_adapters.LocalDateTimeAdapter;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public abstract class BaseHttpHandler implements HttpHandler {
+    protected final Gson gson = new GsonBuilder()
+            .serializeNulls()
+            .setPrettyPrinting()
+            .registerTypeAdapter(Duration.class, new DurationAdapter())
+            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+            .create();
 
     protected void sendText(HttpExchange exchange, String text) throws IOException {
         final int responseCode = 200;
@@ -69,4 +81,8 @@ public abstract class BaseHttpHandler implements HttpHandler {
     protected abstract void processPost(String[] patch, HttpExchange exchange) throws IOException;
 
     protected abstract void processDelete(String[] patch, HttpExchange exchange) throws IOException;
+
+    public Gson getGson() {
+        return gson;
+    }
 }
