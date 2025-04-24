@@ -4,6 +4,7 @@ import history.HistorySet;
 import tasks.task.Task;
 
 import java.util.List;
+import java.util.Optional;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
@@ -14,8 +15,8 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     @Override
-    public void add(Task task) {
-        list.add(task);
+    public void add(Optional<Task> task) {
+        if (task.isPresent()) list.add(task.get());
     }
 
     @Override

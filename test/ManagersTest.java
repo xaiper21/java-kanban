@@ -19,14 +19,14 @@ class ManagersTest {
     public void checkTaskManagerAddAndGetTaskTrue() {
         Task task1 = new Task(TaskStatus.NEW, "1", "2");
         inMemoryTaskManager.addTask(task1);
-        assertTrue(task1.equals(inMemoryTaskManager.getTaskById(task1.getId())));
+        assertTrue(task1.equals(inMemoryTaskManager.getTaskById(task1.getId()).get()));
     }
 
     @Test
     public void checkTaskManagerAddAndGetEpicTrue() {
         Epic epic = new Epic("1", "2");
         inMemoryTaskManager.addEpic(epic);
-        assertEquals(epic, inMemoryTaskManager.getEpicById(epic.getId()));
+        assertEquals(epic, inMemoryTaskManager.getEpicById(epic.getId()).get());
     }
 
     @Test
@@ -35,16 +35,16 @@ class ManagersTest {
         inMemoryTaskManager.addEpic(epic);
         Subtask subtask = new Subtask(TaskStatus.NEW, "2", "10", epic.getId());
         inMemoryTaskManager.addSubtask(subtask);
-        assertTrue(subtask.equals(inMemoryTaskManager.getSubtaskById(subtask.getId())));
+        assertTrue(subtask.equals(inMemoryTaskManager.getSubtaskById(subtask.getId()).get()));
     }
 
     @Test
     public void checkImmutabilityTaskAndTaskHistory() {
         Task task = new Task(TaskStatus.NEW, "name", "description");
         inMemoryTaskManager.addTask(task);
-        assertEquals(TaskStatus.NEW, inMemoryTaskManager.getTaskById(1).getStatus());
-        assertEquals("name", inMemoryTaskManager.getTaskById(1).getName());
-        assertEquals("description", inMemoryTaskManager.getTaskById(1).getDescription());
+        assertEquals(TaskStatus.NEW, inMemoryTaskManager.getTaskById(1).get().getStatus());
+        assertEquals("name", inMemoryTaskManager.getTaskById(1).get().getName());
+        assertEquals("description", inMemoryTaskManager.getTaskById(1).get().getDescription());
 
         task = new Task(TaskStatus.NEW, "name2", "description");
         inMemoryTaskManager.updateTask(task);

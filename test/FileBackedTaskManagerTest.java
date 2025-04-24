@@ -36,14 +36,14 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
     public void checkTaskManagerAddAndGetTaskTrue() {
         Task task1 = new Task(TaskStatus.NEW, "1", "2");
         manager.addTask(task1);
-        Assertions.assertTrue(task1.equals(manager.getTaskById(task1.getId())));
+        Assertions.assertTrue(task1.equals(manager.getTaskById(task1.getId()).get()));
     }
 
     @Test
     public void checkTaskManagerAddAndGetEpicTrue() {
         Epic epic = new Epic("1", "2");
         manager.addEpic(epic);
-        Assertions.assertEquals(epic, manager.getEpicById(epic.getId()));
+        Assertions.assertEquals(epic, manager.getEpicById(epic.getId()).get());
     }
 
     @Test
@@ -52,7 +52,7 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
         manager.addEpic(epic);
         Subtask subtask = new Subtask(TaskStatus.NEW, "2", "10", epic.getId());
         manager.addSubtask(subtask);
-        Assertions.assertTrue(subtask.equals(manager.getSubtaskById(subtask.getId())));
+        Assertions.assertTrue(subtask.equals(manager.getSubtaskById(subtask.getId()).get()));
     }
 
     @Override
