@@ -17,21 +17,21 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseTaskHandler extends BaseHttpHandler {
     protected TaskManager manager;
-    protected Gson gson;
-
-    public BaseTaskHandler(TaskManager manager) {
-        this.manager = manager;
-        gson = new GsonBuilder()
+    protected final static Gson gson = new GsonBuilder()
                 .serializeNulls()
                 .setPrettyPrinting()
                 .registerTypeAdapter(Duration.class, new DurationAdapter())
-                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
-                .create();
+            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+            .create();
+
+    public BaseTaskHandler(TaskManager manager) {
+        this.manager = manager;
     }
 
     @Override
@@ -70,7 +70,6 @@ public abstract class BaseTaskHandler extends BaseHttpHandler {
                 addTask(task);
                 send(exchange,"задача добавлена успешно",200);
             } else {
-
                 updateTask(task);
                 send(exchange,"задача обновлена успешно",200);
             }
@@ -82,7 +81,7 @@ public abstract class BaseTaskHandler extends BaseHttpHandler {
         } catch (IntersectionCheckFromPrioritizedTasksException e) {
             sendHasInteractions(exchange);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
         }
     }
 
@@ -110,4 +109,8 @@ public abstract class BaseTaskHandler extends BaseHttpHandler {
     protected abstract void deleteTask(int id);
 
     protected abstract void addTask(Task task);
+
+    public static Gson getGson() {
+        return gson;
+    }
 }

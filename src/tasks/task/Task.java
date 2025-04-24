@@ -20,8 +20,8 @@ public class Task implements Comparable<Task> {
         return name;
     }
 
-    protected Task(TaskStatus status, String name, String description, TaskType type,
-                   LocalDateTime startTime, Duration duration) {
+    public Task(TaskStatus status, String name, String description, TaskType type,
+                LocalDateTime startTime, Duration duration) {
         this.name = name;
         this.type = type;
         this.description = description;
@@ -117,10 +117,12 @@ public class Task implements Comparable<Task> {
     }
 
     public Duration getDuration() {
-        return duration;
+        if (duration == null) return null;
+            return duration;
     }
 
     public LocalDateTime getStartTime() {
+        if (startTime == null) return null;
         return startTime;
     }
 }

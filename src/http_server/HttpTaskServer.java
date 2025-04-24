@@ -17,18 +17,17 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 
 public class HttpTaskServer {
-    private static TaskManager manager = Managers.getDefault();
+    private final TaskManager manager;
     private static int PORT = 8080;
+    private HttpServer server;
 
-    public static void main(String[] args) {
-        Task task = new Task(TaskStatus.NEW,"name1", "descr");
-        Epic epic = new Epic("epic1","descr");
-        manager.addTask(task);
-        manager.addEpic(epic);
-        Subtask subtask = new Subtask(TaskStatus.NEW,"subtask","descr", epic.getId());
-        manager.addSubtask(subtask);
+    public HttpTaskServer(TaskManager manager) {
+        this.manager = manager;
+    }
+
+    public void start(){
         try {
-            HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
+            server = HttpServer.create(new InetSocketAddress(PORT), 0);
             server.createContext("/tasks", new TaskHandler(manager));
             server.createContext("/subtasks", new SubtaskHandler(manager));
             server.createContext("/epics", new EpicHandler(manager));
@@ -39,5 +38,9 @@ public class HttpTaskServer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void stop(){
+        server.stop(10);
     }
 }
