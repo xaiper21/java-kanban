@@ -1,4 +1,4 @@
-package http_server.handlers.tasks_handlers;
+package http_server.handlers.taskshandlers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -6,8 +6,8 @@ import com.sun.net.httpserver.HttpExchange;
 import exeption.IntersectionCheckFromPrioritizedTasksException;
 import exeption.RequestValidityException;
 import http_server.handlers.BaseHttpHandler;
-import http_server.handlers.tasks_handlers.gson_adapters.DurationAdapter;
-import http_server.handlers.tasks_handlers.gson_adapters.LocalDateTimeAdapter;
+import http_server.handlers.taskshandlers.gson_adapters.DurationAdapter;
+import http_server.handlers.taskshandlers.gson_adapters.LocalDateTimeAdapter;
 import managers.TaskManager;
 import tasks.task.Task;
 

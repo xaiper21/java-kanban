@@ -3,9 +3,9 @@ package http_server;
 import com.sun.net.httpserver.HttpServer;
 import http_server.handlers.collections_handlers.HistoryHandler;
 import http_server.handlers.collections_handlers.PrioritizedHandler;
-import http_server.handlers.tasks_handlers.EpicHandler;
-import http_server.handlers.tasks_handlers.SubtaskHandler;
-import http_server.handlers.tasks_handlers.TaskHandler;
+import http_server.handlers.taskshandlers.EpicHandler;
+import http_server.handlers.taskshandlers.SubtaskHandler;
+import http_server.handlers.taskshandlers.TaskHandler;
 import managers.TaskManager;
 
 import java.io.IOException;

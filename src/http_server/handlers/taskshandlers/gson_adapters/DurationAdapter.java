@@ -1,4 +1,4 @@
-package http_server.handlers.tasks_handlers.gson_adapters;
+package http_server.handlers.taskshandlers.gson_adapters;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;

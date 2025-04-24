@@ -1,44 +1,45 @@
-package http_server.handlers.tasks_handlers;
+package http_server.handlers.taskshandlers;
 
 import managers.TaskManager;
-import tasks.subtask.Subtask;
 import tasks.task.Task;
 
 import java.util.List;
 import java.util.Optional;
 
-public class SubtaskHandler extends BaseTaskHandler {
-    public SubtaskHandler(TaskManager manager) {
+public class TaskHandler extends BaseTaskHandler {
+
+
+    public TaskHandler(TaskManager manager) {
         super(manager);
     }
 
     @Override
     protected List<Task> getList() {
-        return manager.getListAllSubtasks();
+        return manager.getListAllTasks();
     }
 
     @Override
     protected Optional<Task> getTask(int id) {
-        return manager.getSubtaskById(id);
+        return manager.getTaskById(id);
     }
 
     @Override
     protected Task createTask(String valueJson) {
-        return gson.fromJson(valueJson, Subtask.class);
+        return gson.fromJson(valueJson,Task.class);
     }
 
     @Override
     protected void updateTask(Task task) {
-        manager.updateSubtask((Subtask) task);
+        manager.updateTask(task);
     }
 
     @Override
     protected void deleteTask(int id) {
-        manager.removeSubtaskById(id);
+        manager.removeTaskById(id);
     }
 
     @Override
     protected void addTask(Task task) {
-        manager.addSubtask((Subtask) task);
+        manager.addTask(task);
     }
 }
