@@ -1,4 +1,4 @@
-package http_server.handlers.taskshandlers;
+package httpserver.handlers.taskshandlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import managers.TaskManager;

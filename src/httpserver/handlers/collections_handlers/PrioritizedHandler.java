@@ -1,4 +1,4 @@
-package http_server.handlers.collections_handlers;
+package httpserver.handlers.collections_handlers;
 
 import managers.TaskManager;
 import tasks.task.Task;

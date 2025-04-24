@@ -1,8 +1,8 @@
-package http_server.handlers.collections_handlers;
+package httpserver.handlers.collections_handlers;
 
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
-import http_server.handlers.BaseHttpHandler;
+import httpserver.handlers.BaseHttpHandler;
 import managers.TaskManager;
 import tasks.task.Task;
 

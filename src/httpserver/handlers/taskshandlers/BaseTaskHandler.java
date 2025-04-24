@@ -1,13 +1,13 @@
-package http_server.handlers.taskshandlers;
+package httpserver.handlers.taskshandlers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
 import exeption.IntersectionCheckFromPrioritizedTasksException;
 import exeption.RequestValidityException;
-import http_server.handlers.BaseHttpHandler;
-import http_server.handlers.taskshandlers.gson_adapters.DurationAdapter;
-import http_server.handlers.taskshandlers.gson_adapters.LocalDateTimeAdapter;
+import httpserver.handlers.BaseHttpHandler;
+import httpserver.handlers.taskshandlers.gson_adapters.DurationAdapter;
+import httpserver.handlers.taskshandlers.gson_adapters.LocalDateTimeAdapter;
 import managers.TaskManager;
 import tasks.task.Task;
 
@@ -23,7 +23,7 @@ import java.util.Optional;
 
 public abstract class BaseTaskHandler extends BaseHttpHandler {
     protected TaskManager manager;
-    protected final static Gson gson = new GsonBuilder()
+    protected final Gson gson = new GsonBuilder()
                 .serializeNulls()
                 .setPrettyPrinting()
                 .registerTypeAdapter(Duration.class, new DurationAdapter())
@@ -110,7 +110,7 @@ public abstract class BaseTaskHandler extends BaseHttpHandler {
 
     protected abstract void addTask(Task task);
 
-    public static Gson getGson() {
+    public  Gson getGson() {
         return gson;
     }
 }

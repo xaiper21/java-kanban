@@ -1,11 +1,11 @@
-package http_server;
+package httpserver;
 
 import com.sun.net.httpserver.HttpServer;
-import http_server.handlers.collections_handlers.HistoryHandler;
-import http_server.handlers.collections_handlers.PrioritizedHandler;
-import http_server.handlers.taskshandlers.EpicHandler;
-import http_server.handlers.taskshandlers.SubtaskHandler;
-import http_server.handlers.taskshandlers.TaskHandler;
+import httpserver.handlers.collections_handlers.HistoryHandler;
+import httpserver.handlers.collections_handlers.PrioritizedHandler;
+import httpserver.handlers.taskshandlers.EpicHandler;
+import httpserver.handlers.taskshandlers.SubtaskHandler;
+import httpserver.handlers.taskshandlers.TaskHandler;
 import managers.TaskManager;
 
 import java.io.IOException;
