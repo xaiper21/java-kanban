@@ -3,15 +3,10 @@ package http_server;
 import com.sun.net.httpserver.HttpServer;
 import http_server.handlers.collections_handlers.HistoryHandler;
 import http_server.handlers.collections_handlers.PrioritizedHandler;
-import http_server.handlers.task_handlers.EpicHandler;
-import http_server.handlers.task_handlers.SubtaskHandler;
-import http_server.handlers.task_handlers.TaskHandler;
-import managers.Managers;
+import http_server.handlers.tasks_handlers.EpicHandler;
+import http_server.handlers.tasks_handlers.SubtaskHandler;
+import http_server.handlers.tasks_handlers.TaskHandler;
 import managers.TaskManager;
-import tasks.TaskStatus;
-import tasks.epic.Epic;
-import tasks.subtask.Subtask;
-import tasks.task.Task;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

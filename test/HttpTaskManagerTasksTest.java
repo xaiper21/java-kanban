@@ -1,6 +1,6 @@
 import com.google.gson.Gson;
 import http_server.HttpTaskServer;
-import http_server.handlers.task_handlers.BaseTaskHandler;
+import http_server.handlers.tasks_handlers.BaseTaskHandler;
 import managers.InMemoryTaskManager;
 import managers.TaskManager;
 import org.junit.jupiter.api.AfterEach;
