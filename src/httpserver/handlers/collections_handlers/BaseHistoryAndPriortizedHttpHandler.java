@@ -1,6 +1,5 @@
 package httpserver.handlers.collections_handlers;
 
-import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import httpserver.handlers.BaseHttpHandler;
 import managers.TaskManager;
@@ -19,7 +18,6 @@ public abstract class BaseHistoryAndPriortizedHttpHandler extends BaseHttpHandle
     @Override
     protected void processGet(String[] patch, HttpExchange exchange) throws IOException {
         List<Task> tasks = getCollection();
-        Gson gson = new Gson();
         sendText(exchange, gson.toJson(tasks));
     }
 
