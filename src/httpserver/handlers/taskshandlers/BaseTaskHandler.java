@@ -56,7 +56,7 @@ public abstract class BaseTaskHandler extends BaseHttpHandler {
                 throw new IntersectionCheckFromPrioritizedTasksException();
             if (task.getId() == 0) {
                 addTask(task);
-                send(exchange, "задача добавлена успешно, id:"+task.getId(), 200);
+                send(exchange, "задача добавлена успешно, id:" + task.getId(), 200);
             } else {
                 updateTask(task);
                 send(exchange, "задача обновлена успешно", 200);
