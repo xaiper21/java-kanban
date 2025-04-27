@@ -32,11 +32,11 @@ public interface TaskManager {
 
     void addSubtask(Subtask subtask);
 
-    void updateTask(Task task);///
+    void updateTask(Task task);
 
-    void updateEpic(Epic epic);///
+    void updateEpic(Epic epic);
 
-    void updateSubtask(Subtask subtask);///
+    void updateSubtask(Subtask subtask);
 
     void removeSubtaskById(int id);
 
@@ -50,5 +50,7 @@ public interface TaskManager {
 
     List<Task> getPrioritizedTasks();
 
-    boolean intersectionCheckFromPrioritizedTasks(Task task); ///
+    boolean intersectionCheckFromPrioritizedTasks(Task task);
+
+    boolean containsIdEpic(int id);
 }

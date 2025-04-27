@@ -2,9 +2,13 @@ package httpserver.handlers.taskshandlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import exeption.IntersectionCheckFromPrioritizedTasksException;
+import exeption.ManagerNoContainsEpic;
+import exeption.NoValidJson;
 import exeption.RequestValidityException;
 import httpserver.handlers.BaseHttpHandler;
 import managers.TaskManager;
+import tasks.TaskType;
+import tasks.subtask.Subtask;
 import tasks.task.Task;
 
 import java.io.BufferedReader;
@@ -51,15 +55,20 @@ public abstract class BaseTaskHandler extends BaseHttpHandler {
             while (br.ready()) {
                 sb.append(br.readLine());
             }
+            if (sb.toString().trim().equals("")) throw new NoValidJson();
             Task task = createTask(sb.toString());
             if (!manager.intersectionCheckFromPrioritizedTasks(task))
                 throw new IntersectionCheckFromPrioritizedTasksException();
+            if (task.getType() == TaskType.Subtask) {
+                Subtask subtask = (Subtask) task;
+                if (!manager.containsIdEpic(subtask.getIdMyEpic())) throw new ManagerNoContainsEpic();
+            }
             if (task.getId() == 0) {
                 addTask(task);
-                send(exchange, "задача добавлена успешно, id:" + task.getId(), 200);
+                send(exchange, "задача добавлена успешно, id:" + task.getId(), 201);
             } else {
                 updateTask(task);
-                send(exchange, "задача обновлена успешно", 200);
+                send(exchange, "задача обновлена успешно", 201);
             }
 
         } catch (IOException e) {
@@ -68,33 +77,37 @@ public abstract class BaseTaskHandler extends BaseHttpHandler {
             sendErrorValid(exchange);
         } catch (IntersectionCheckFromPrioritizedTasksException e) {
             sendHasInteractions(exchange);
+        } catch (ManagerNoContainsEpic e) {
+            send(exchange, e.getMessage(), 406);
+        } catch (NoValidJson e) {
+            send(exchange, e.getMessage(),406);
         } catch (Exception e) {
             System.out.println(e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
         }
     }
 
-    @Override
-    protected void processDelete(String[] patch, HttpExchange exchange) throws IOException {
-        try {
-            if (patch.length == 3) {
-                int id = Integer.parseInt(patch[2]);
-                deleteTask(id);
+        @Override
+        protected void processDelete (String[]patch, HttpExchange exchange) throws IOException {
+            try {
+                if (patch.length == 3) {
+                    int id = Integer.parseInt(patch[2]);
+                    deleteTask(id);
+                }
                 sendText(exchange, "задача удалена");
+            } catch (NumberFormatException e) {
+                sendErrorValid(exchange);
             }
-        } catch (NumberFormatException e) {
-            sendErrorValid(exchange);
         }
+
+        protected abstract List<Task> getList ();
+
+        protected abstract Optional<Task> getTask ( int id);
+
+        protected abstract Task createTask (String valueJson);
+
+        protected abstract void updateTask (Task task);
+
+        protected abstract void deleteTask ( int id);
+
+        protected abstract void addTask (Task task);
     }
-
-    protected abstract List<Task> getList();
-
-    protected abstract Optional<Task> getTask(int id);
-
-    protected abstract Task createTask(String valueJson);
-
-    protected abstract void updateTask(Task task);
-
-    protected abstract void deleteTask(int id);
-
-    protected abstract void addTask(Task task);
-}

@@ -241,4 +241,9 @@ public class InMemoryTaskManager implements TaskManager {
         }
         return true;
     }
+
+    @Override
+    public boolean containsIdEpic(int id) {
+        return epicTable.containsKey(id);
+    }
 }
