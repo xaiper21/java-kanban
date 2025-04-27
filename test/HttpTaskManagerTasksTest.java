@@ -109,14 +109,14 @@ public class HttpTaskManagerTasksTest {
                 1, LocalDateTime.now(), Duration.ofMinutes(30));
         Epic epic = new Epic("Test epic", "descr");
         HttpResponse<String> responseAddEpic = methodPost(epic, epicsUri);
-        HttpResponse<String> responseAddSubtask = methodPost(subtask, subtaskUri);
 
         assertEquals(201, responseAddEpic.statusCode());
         List<Task> epicsFromManager = manager.getListAllEpics();
         assertNotNull(epicsFromManager, "Задачи не возвращаются");
         assertEquals(1, epicsFromManager.size(), "Некорректное количество задач");
         assertEquals("Test epic", epicsFromManager.get(0).getName(), "Некорректное имя задачи");
-
+        
+        HttpResponse<String> responseAddSubtask = methodPost(subtask, subtaskUri);
         assertEquals(201, responseAddSubtask.statusCode());
         List<Task> subtasksFromManager = manager.getListAllSubtasks();
         assertNotNull(subtasksFromManager, "Задачи не возвращаются");
