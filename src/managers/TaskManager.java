@@ -5,13 +5,14 @@ import tasks.subtask.Subtask;
 import tasks.task.Task;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TaskManager {
     List<Task> getListAllTasks();
 
-    List<Epic> getListAllEpics();
+    List<Task> getListAllEpics();
 
-    List<Subtask> getListAllSubtasks();
+    List<Task> getListAllSubtasks();
 
     void removeAllTasks();
 
@@ -19,11 +20,11 @@ public interface TaskManager {
 
     void removeAllSubtasks();
 
-    Task getTaskById(int id);
+    Optional<Task> getTaskById(int id);
 
-    Epic getEpicById(int id);
+    Optional<Task> getEpicById(int id);
 
-    Subtask getSubtaskById(int id);
+    Optional<Task> getSubtaskById(int id);
 
     void addTask(Task task);
 
@@ -31,11 +32,11 @@ public interface TaskManager {
 
     void addSubtask(Subtask subtask);
 
-    void updateTask(Task task);///
+    void updateTask(Task task);
 
-    void updateEpic(Epic epic);///
+    void updateEpic(Epic epic);
 
-    void updateSubtask(Subtask subtask);///
+    void updateSubtask(Subtask subtask);
 
     void removeSubtaskById(int id);
 
@@ -45,5 +46,11 @@ public interface TaskManager {
 
     List<Subtask> getListSubtasksByIdEpic(int id);
 
-    List<Task> getHistory();///
+    List<Task> getHistory();
+
+    List<Task> getPrioritizedTasks();
+
+    boolean intersectionCheckFromPrioritizedTasks(Task task);
+
+    boolean containsIdEpic(int id);
 }

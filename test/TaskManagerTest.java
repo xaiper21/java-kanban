@@ -42,7 +42,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
     @Test
     void addTaskTest() {
         taskManager.addTask(task1);
-        assertEquals(task1, taskManager.getTaskById(task1.getId()));
+        assertEquals(task1, taskManager.getTaskById(task1.getId()).get());
     }
 
     @Test
@@ -54,14 +54,14 @@ public abstract class TaskManagerTest<T extends TaskManager> {
     @Test
     void addEpicTest() {
         taskManager.addEpic(epic1);
-        assertEquals(epic1, taskManager.getEpicById(epic1.getId()));
+        assertEquals(epic1, taskManager.getEpicById(epic1.getId()).get());
     }
 
     @Test
     void addSubtaskTest() {
         Subtask subtask = generateTestSubtaskByEpic(epic1);
         taskManager.addSubtask(subtask);
-        assertEquals(subtask, taskManager.getSubtaskById(subtask.getId()));
+        assertEquals(subtask, taskManager.getSubtaskById(subtask.getId()).get());
         assertEquals(1, taskManager.getListAllSubtasks().size());
     }
 
@@ -83,20 +83,20 @@ public abstract class TaskManagerTest<T extends TaskManager> {
     @Test
     void getTaskByIdTest() {
         taskManager.addTask(task2);
-        assertEquals(task2, taskManager.getTaskById(task2.getId()));
+        assertEquals(task2, taskManager.getTaskById(task2.getId()).get());
     }
 
     @Test
     void getEpicByIdTest() {
         taskManager.addEpic(epic2);
-        assertEquals(epic2, taskManager.getEpicById(epic2.getId()));
+        assertEquals(epic2, taskManager.getEpicById(epic2.getId()).get());
     }
 
     @Test
     void getSubtaskByIdTest() {
         Subtask subtask = generateTestSubtaskByEpic(epic2);
         taskManager.addSubtask(subtask);
-        assertEquals(subtask, taskManager.getSubtaskById(subtask.getId()));
+        assertEquals(subtask, taskManager.getSubtaskById(subtask.getId()).get());
     }
 
     @Test

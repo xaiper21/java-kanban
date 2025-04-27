@@ -40,12 +40,12 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public List<Epic> getListAllEpics() {
+    public List<Task> getListAllEpics() {
         return epicTable.values().stream().collect(Collectors.toList());
     }
 
     @Override
-    public List<Subtask> getListAllSubtasks() {
+    public List<Task> getListAllSubtasks() {
         return epicTable.values().stream()
                 .flatMap(epic -> epic.getArrayListSubtasks().stream())
                 .collect(Collectors.toList());
@@ -81,29 +81,29 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Task getTaskById(int id) {
-        Task task = taskTable.get(id);
-        historyManager.add(task);
-        return task;
+    public Optional<Task> getTaskById(int id) {
+        Optional<Task> taskOptional = Optional.ofNullable(taskTable.get(id));
+        historyManager.add(taskOptional);
+        return taskOptional;
     }
 
     @Override
-    public Epic getEpicById(int id) {
-        Epic task = epicTable.get(id);
-        historyManager.add(task);
-        return task;
+    public Optional<Task> getEpicById(int id) {
+        Optional<Task> optionalTask = Optional.ofNullable(epicTable.get(id));
+        historyManager.add(optionalTask);
+        return optionalTask;
     }
 
     @Override
-    public Subtask getSubtaskById(int id) {
+    public Optional<Task> getSubtaskById(int id) {
         for (Epic epic : epicTable.values()) {
             if (epic.isContainsSubtaskId(id)) {
-                Subtask subtask = epic.getSubtaskById(id);
-                historyManager.add(subtask);
-                return subtask;
+                Optional<Task> optionalTask = Optional.ofNullable(epic.getSubtaskById(id));
+                historyManager.add(optionalTask);
+                return optionalTask;
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
@@ -240,5 +240,10 @@ public class InMemoryTaskManager implements TaskManager {
             if (intersectionCheckTime(task1, task)) return false;
         }
         return true;
+    }
+
+    @Override
+    public boolean containsIdEpic(int id) {
+        return epicTable.containsKey(id);
     }
 }
